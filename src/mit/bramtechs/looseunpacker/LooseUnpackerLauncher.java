@@ -12,14 +12,12 @@ public class LooseUnpackerLauncher {
 			".png",".bmp",".gif",".jpg",".jpeg"
 	};
 	
-	public LooseUnpackerLauncher(String[] args) {
-
-		printArgs(args);
-		
+	public LooseUnpackerLauncher(String[] args) throws IOException {
 		// check if enough args
 		switch (args.length) {
 		case 0:
-			System.err.println("No input file path given.");
+			// open the gui instead
+			new LooseUnpackerGUI();
 			return;
 		case 1:
 			System.err.println("No output folder given");
@@ -54,7 +52,7 @@ public class LooseUnpackerLauncher {
 			image = ImageIO.read(inputFile);
 		} catch (IOException e) {
 			e.printStackTrace();
-			return;
+			throw e;
 		}
 		
 		String name = inputPath.substring(inputPath.lastIndexOf('/')+1);
@@ -83,7 +81,7 @@ public class LooseUnpackerLauncher {
 		System.out.println("<--");
 	}
 	
-	public static void main(String[] args) {
+	public static void main(String[] args) throws IOException {
 		new LooseUnpackerLauncher(args);
 	}
 

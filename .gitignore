@@ -1,3 +1,6 @@
+./jgoodies-*
+./miglayout*
+
 RELEASES
 .settings
 example/out

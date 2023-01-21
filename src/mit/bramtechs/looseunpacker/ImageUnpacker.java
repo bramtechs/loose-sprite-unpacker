@@ -45,7 +45,7 @@ public class ImageUnpacker {
 	}
 
 	private boolean isAlpha(Color c) {
-		return c.getRed() == 0 && c.getGreen() == 0 && c.getBlue() == 0 && c.getAlpha() == 0;
+		return c.getAlpha() == 0;
 	}
 
 	private void explore(HashMap<Point, Color> pixels, int x, int y) { // recursion,recursion,recursion,recursion, ...
