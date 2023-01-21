@@ -1,8 +1,8 @@
-package mit.bramtechs.looseunpacker.test;
+package be.brambasiel.looseunpacker.test;
 
 import java.io.IOException;
 
-import mit.bramtechs.looseunpacker.LooseUnpackerLauncher;
+import be.brambasiel.looseunpacker.LooseUnpackerLauncher;
 
 public class LooseUnpackerTest {
 

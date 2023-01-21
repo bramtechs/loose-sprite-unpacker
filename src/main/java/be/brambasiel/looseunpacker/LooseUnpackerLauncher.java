@@ -1,4 +1,4 @@
-package mit.bramtechs.looseunpacker;
+package be.brambasiel.looseunpacker;
 
 import java.awt.image.BufferedImage;
 import java.io.File;

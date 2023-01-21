@@ -1,0 +1,21 @@
+plugins {
+    id 'java'
+}
+
+group 'be.brambasiel'
+version '1.0-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+}
+
+jar {
+    manifest {
+        attributes(
+                'Main-Class': 'be.brambasiel.looseunpacker.LooseUnpackerLauncher'
+        )
+    }
+}
