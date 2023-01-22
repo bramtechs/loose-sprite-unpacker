@@ -44,5 +44,5 @@ jobs:
           prerelease: false
           title: "Release build"
           files: |
-            LICENSE.txt
+            LICENSE.md
             build/libs/*.jar
