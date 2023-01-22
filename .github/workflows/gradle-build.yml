@@ -36,7 +36,13 @@ jobs:
         run: |
           mv build/libs/java-loose-sprite-unpacker-gradle-1.0-SNAPSHOT.jar build/libs/sprite-unpacker.jar
         shell: bash
-      - uses: actions/upload-artifact@v3
+      - name: Upload jar
+        uses: marvinpinto/action-automatic-releases@latest
         with:
-          name: Package
-          path: build/libs
+          repo_token: "${{ secrets.GITHUB_TOKEN }}"
+          automatic_release_tag: "release-${{ github.run_id }}-${{ github.run_attempt }}"
+          prerelease: false
+          title: "Release build"
+          files: |
+            LICENSE.txt
+            build/libs/*.jar
