@@ -7,10 +7,10 @@ import java.awt.Point;
 import java.awt.Rectangle;
 import java.awt.Color;
 
-public class PixelMapTest {
+class PixelMapTest {
 
     @Test
-    public void testBounds() {
+    void testBounds() {
         PixelMap pixels = new PixelMap();
         pixels.put(new Point(0, -3), Color.BLACK);
         pixels.put(new Point(-10, 0), Color.BLACK);
@@ -18,7 +18,7 @@ public class PixelMapTest {
         pixels.put(new Point(3, 5), Color.BLACK);
         pixels.put(new Point(6, 20), Color.BLACK);
 
-        Rectangle expected = new Rectangle(-10, -3, 20, 5);
+        Rectangle expected = new Rectangle(-10, -3, 17, 24);
         assertEquals(expected, pixels.bounds());
     }
 }

@@ -3,21 +3,32 @@ package be.brambasiel.unpacker;
 import java.awt.Color;
 import java.awt.Point;
 import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.logging.Logger;
 
 import be.brambasiel.unpacker.collections.PixelMap;
 
+import javax.imageio.ImageIO;
+
 public class ImageUnpacker {
-	private static Logger logger = Logger.getAnonymousLogger(ImageUnpacker.class.getName());
+	private static final Logger logger = Logger.getAnonymousLogger(ImageUnpacker.class.getName());
 
 	private final BufferedImage image;
 	private final ImageWriter builder;
 	private boolean[][] traversed;
 
-	public ImageUnpacker(ImageWriter builder, BufferedImage image) {
-		this.image = image;
-		this.builder = builder;
+	public ImageUnpacker(File imageFile, File outputFolder) throws IOException {
+		if (!imageFile.exists()){
+			throw new IllegalArgumentException("Image file does not exist");
+		}
+        if (outputFolder.isDirectory()){
+            throw new IllegalArgumentException("Output folder is not a directory");
+        }
+
+		this.image = ImageIO.read(imageFile);
+		this.builder = new ImageWriter(imageFile, outputFolder);
 	}
 
 	public void unpack() {
