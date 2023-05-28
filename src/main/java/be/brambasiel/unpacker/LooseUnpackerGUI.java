@@ -1,4 +1,4 @@
-package be.brambasiel.looseunpacker;
+package be.brambasiel.unpacker;
 
 import javax.swing.JFrame;
 import javax.swing.JLabel;

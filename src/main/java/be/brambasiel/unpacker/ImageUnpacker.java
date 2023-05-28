@@ -1,17 +1,21 @@
-package be.brambasiel.looseunpacker;
+package be.brambasiel.unpacker;
 
 import java.awt.Color;
 import java.awt.Point;
 import java.awt.image.BufferedImage;
 import java.util.HashMap;
+import java.util.logging.Logger;
+
+import be.brambasiel.unpacker.collections.PixelMap;
 
 public class ImageUnpacker {
+	private static Logger logger = Logger.getAnonymousLogger(ImageUnpacker.class.getName());
 
 	private final BufferedImage image;
-	private final SpriteBuilder builder;
+	private final ImageWriter builder;
 	private boolean[][] traversed;
-	
-	public ImageUnpacker(SpriteBuilder builder, BufferedImage image) {
+
+	public ImageUnpacker(ImageWriter builder, BufferedImage image) {
 		this.image = image;
 		this.builder = builder;
 	}
@@ -25,19 +29,21 @@ public class ImageUnpacker {
 		for (int y = 0; y < image.getHeight(); y++) {
 			for (int x = 0; x < image.getWidth(); x++) {
 
-				if (traversed[x][y] == true) // don't go over already checked pixels
+				if (traversed[x][y]) // don't go over already checked pixels
 					continue;
-				
-				Color col = getPixel(x,y);
+
+				Color col = getPixel(x, y);
 				if (!isAlpha(col)) {
 					// 'magicwand' the surrounding shape
-					HashMap<Point, Color> points = new HashMap<Point, Color>();
-					explore(points, x, y);
-					System.out.println("Found shape with " + points.size() + " pixels");
-					BufferedImage image = builder.construct(points);
-					builder.export(image,i);
+					PixelMap pixels = new PixelMap();
+					explore(pixels, x, y);
+					logger.fine(() -> String.format("Found shape with %d pixels", pixels.size()));
+
+					builder.setPixels(pixels);
+					builder.export(i);
+
 					i++;
-				}else {
+				} else {
 					traversed[x][y] = true;
 				}
 			}
@@ -57,17 +63,17 @@ public class ImageUnpacker {
 			Color col = getPixel(x, y);
 			if (!isAlpha(col)) {
 				pixels.put(new Point(x, y), col);
-				
-				explore(pixels, x-1, y-1);
-				explore(pixels, x+0, y-1);
-				explore(pixels, x+1, y-1);
-				
-				explore(pixels, x-1, y+0);
-				explore(pixels, x+1, y+0);
-				
-				explore(pixels, x-1, y+1);
-				explore(pixels, x+0, y+1);
-				explore(pixels, x+1, y+1);
+
+				explore(pixels, x - 1, y - 1);
+				explore(pixels, x + 0, y - 1);
+				explore(pixels, x + 1, y - 1);
+
+				explore(pixels, x - 1, y + 0);
+				explore(pixels, x + 1, y + 0);
+
+				explore(pixels, x - 1, y + 1);
+				explore(pixels, x + 0, y + 1);
+				explore(pixels, x + 1, y + 1);
 			}
 		}
 	}

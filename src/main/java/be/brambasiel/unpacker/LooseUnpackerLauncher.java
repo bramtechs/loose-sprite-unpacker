@@ -1,12 +1,14 @@
-package be.brambasiel.looseunpacker;
+package be.brambasiel.unpacker;
 
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.util.logging.Logger;
 
 import javax.imageio.ImageIO;
 
 public class LooseUnpackerLauncher {
+	private static final Logger logger = Logger.getAnonymousLogger(LooseUnpackerLauncher.class.getName());
 
 	private final String[] exts = {
 			".png",".bmp",".gif",".jpg",".jpeg"
@@ -20,12 +22,12 @@ public class LooseUnpackerLauncher {
 			new LooseUnpackerGUI();
 			return;
 		case 1:
-			System.err.println("No output folder given");
+			logger.severe("No output folder given");
 			return;
 		case 2:
 			break;
 		default:
-			System.err.println("Too many arguments given");
+			logger.severe("Too many arguments given");
 			return;
 		}
 		
@@ -37,12 +39,12 @@ public class LooseUnpackerLauncher {
 		File outputFile = new File(outputPath);
 		
 		if (!inputFile.exists()) {
-			System.err.println("Input file doesn't exist!");
+			logger.severe("Input file doesn't exist!");
 			return;
 		}
 		
 		if (!hasValidExtension(inputFile)) {
-			System.err.println("Invalid input format");
+			logger.severe("Invalid input format");
 		}
 		
 		outputFile.mkdirs();
@@ -59,7 +61,7 @@ public class LooseUnpackerLauncher {
 		String ext = inputPath.substring(inputPath.lastIndexOf('.')+1);
 		name = name.substring(0, name.lastIndexOf('.')-1);
 		
-		SpriteBuilder builder = new SpriteBuilder(outputFile,name,ext);
+		ImageWriter builder = new ImageWriter(outputFile,name,ext);
 		ImageUnpacker unpacker = new ImageUnpacker(builder,image);
 		unpacker.unpack();
 	}
@@ -74,11 +76,11 @@ public class LooseUnpackerLauncher {
 	}
 	
 	private void printArgs(String[] args) {
-		System.out.println("--> args");
+		logger.fine("--> args");
 		for (String arg : args) {
-			System.out.println(arg);
+			logger.fine(arg);
 		}
-		System.out.println("<--");
+		logger.fine("<--");
 	}
 	
 	public static void main(String[] args) throws IOException {
