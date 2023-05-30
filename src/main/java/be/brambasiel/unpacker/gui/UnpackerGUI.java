@@ -20,7 +20,7 @@ import java.util.logging.Logger;
 
 public class UnpackerGUI implements UnpackerActions {
 
-    private static final Logger logger = Logger.getAnonymousLogger(UnpackerJFrame.class.getName());
+    private static final Logger logger = Logger.getLogger(UnpackerJFrame.class.getName());
     private final UnpackerJFrame frame;
 
     private Path inputFile;

@@ -4,7 +4,7 @@ import java.io.File;
 import java.util.logging.Logger;
 
 public abstract class AbstractImageUnpacker {
-    private static final Logger logger = Logger.getAnonymousLogger(ImageUnpacker.class.getName());
+    private static final Logger logger = Logger.getLogger(ImageUnpacker.class.getName());
 
     protected void process(File imageFile, File outputFolder) {
         try {

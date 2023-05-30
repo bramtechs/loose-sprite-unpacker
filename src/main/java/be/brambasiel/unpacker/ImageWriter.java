@@ -15,7 +15,7 @@ import org.jetbrains.annotations.Nullable;
 
 public class ImageWriter {
 
-    private static final Logger logger = Logger.getAnonymousLogger(ImageWriter.class.getName());
+    private static final Logger logger = Logger.getLogger(ImageWriter.class.getName());
 
     private final File imageFile;
     private final File outputFolder;

@@ -7,7 +7,7 @@ import java.util.logging.Logger;
 
 public class UnpackerJFrame extends JFrame {
 
-    private static final Logger logger = Logger.getAnonymousLogger(UnpackerJFrame.class.getName());
+    private static final Logger logger = Logger.getLogger(UnpackerJFrame.class.getName());
 
     @Serial
     private static final long serialVersionUID = -4770437700973760346L;

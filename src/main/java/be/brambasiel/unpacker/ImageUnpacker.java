@@ -13,7 +13,7 @@ import be.brambasiel.unpacker.collections.PixelMap;
 import javax.imageio.ImageIO;
 
 public class ImageUnpacker {
-	private static final Logger logger = Logger.getAnonymousLogger(ImageUnpacker.class.getName());
+	private static final Logger logger = Logger.getLogger(ImageUnpacker.class.getName());
 
 	private final BufferedImage image;
 	private final ImageWriter builder;
@@ -23,7 +23,7 @@ public class ImageUnpacker {
 		if (!imageFile.exists()){
 			throw new IllegalArgumentException("Image file does not exist");
 		}
-        if (outputFolder.isDirectory()){
+        if (!outputFolder.isDirectory()){
             throw new IllegalArgumentException("Output folder is not a directory");
         }
 
@@ -32,7 +32,6 @@ public class ImageUnpacker {
 	}
 
 	public void unpack() {
-
 		traversed = new boolean[image.getWidth()][image.getHeight()];
 
 		// check each pixel that isn't transparent

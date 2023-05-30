@@ -7,7 +7,7 @@ import java.io.IOException;
 import java.util.logging.Logger;
 
 public class ImageUnpackerCLI {
-    private static final Logger logger = Logger.getAnonymousLogger(ImageUnpackerCLI.class.getName());
+    private static final Logger logger = Logger.getLogger(ImageUnpackerCLI.class.getName());
 
     private void checkArgsOrThrow(String[] args) {
         if (args.length == 0) {
