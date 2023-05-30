@@ -23,7 +23,7 @@ test {
 jar {
     manifest {
         attributes(
-                'Main-Class': 'be.brambasiel.looseunpacker.LooseUnpackerLauncher'
+                'Main-Class': 'be.brambasiel.unpacker.ImageUnpackerEntry'
         )
     }
 }
