@@ -79,12 +79,7 @@ public class ImageUnpackerTest {
         File imageFile = getTestFile("shapes.png");
         File tempFolder = createTestFolder("shapes_out");
 
-        try {
-            ImageUnpacker unpacker = new ImageUnpacker(imageFile, tempFolder);
-            unpacker.unpack();
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+        ImageUnpacker.run(imageFile, tempFolder);
 
         File[] files = tempFolder.listFiles();
         assertNotNull(files);

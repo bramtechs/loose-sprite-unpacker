@@ -27,13 +27,6 @@ public class ImageUnpackerCLI {
         File imageFile = new File(args[0]);
         File outputFolder = new File(args[1]);
 
-        try {
-            ImageUnpacker unpacker = new ImageUnpacker(imageFile, outputFolder);
-            unpacker.unpack();
-        } catch (IOException e) {
-            logger.severe("Failed to unpack image");
-            logger.severe(e.toString());
-            e.printStackTrace();
-        }
+        ImageUnpacker.run(imageFile, outputFolder);
     }
 }

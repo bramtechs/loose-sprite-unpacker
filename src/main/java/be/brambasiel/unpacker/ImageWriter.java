@@ -68,4 +68,12 @@ public class ImageWriter {
 		img.flush();
 		return img;
 	}
+
+    public File getImageFile() {
+        return imageFile;
+    }
+
+    public File getOutputFolder() {
+        return outputFolder;
+    }
 }
