@@ -27,7 +27,7 @@ public class UnpackerGUI implements UnpackerActions {
     private Path outputFolder;
 
     public UnpackerGUI() {
-        frame = new UnpackerJFrame();
+        frame = new UnpackerJFrame(this);
     }
 
     @Override
@@ -55,12 +55,12 @@ public class UnpackerGUI implements UnpackerActions {
     }
 
     @Override
-    public void selectInputFile() {
+    public File selectInputFile() {
         throw new UnsupportedOperationException("Not implemented yet");
     }
 
     @Override
-    public void selectOutputFile() {
+    public File selectOutputFile() {
         throw new UnsupportedOperationException("Not implemented yet");
     }
 }
