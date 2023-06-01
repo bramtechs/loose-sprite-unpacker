@@ -8,21 +8,21 @@ import java.util.HashMap;
 public class PixelMap extends HashMap<Point, Color> {
 
     public Rectangle bounds() {
-        int largestX = 0;
-        int largestY = 0;
+        int largestX = Integer.MIN_VALUE;
+        int largestY = Integer.MIN_VALUE;
         int smallestX = Integer.MAX_VALUE;
         int smallestY = Integer.MAX_VALUE;
         for (Point pos : this.keySet()) {
             if (pos.x > largestX) {
                 largestX = pos.x;
             }
-            else if (pos.x < smallestX) {
+            if (pos.x < smallestX) {
                 smallestX = pos.x;
             }
             if (pos.y > largestY) {
                 largestY = pos.y;
             }
-            else if (pos.y < smallestY) {
+            if (pos.y < smallestY) {
                 smallestY = pos.y;
             }
         }

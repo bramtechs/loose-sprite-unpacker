@@ -32,14 +32,19 @@ public class ImageWriter {
         this.extension = extension;
     }
 
-    public ImageWriter(File imageFile, File outputFolder){
+    public ImageWriter(File imageFile, File outputFolder) {
         this(FilenameUtils.getBaseName(imageFile.getName()), FilenameUtils.getExtension(imageFile.getName()), outputFolder);
     }
 
     public void setPixels(PixelMap pixels) {
+        if (pixels.size() == 1) {
+            logger.warning("ImageWriter.setPixels() called with a single pixel");
+            return;
+        }
+
         Rectangle bounds = pixels.bounds();
         image = createGraphics(bounds, pixels, (g, x, y, color) -> {
-			// HACK: draw a line instead of a pixel to avoid antialiasing
+            // HACK: draw a line instead of a pixel to avoid antialiasing
             g.setColor(color);
             g.drawLine(x, y, x, y);
         });
@@ -56,7 +61,7 @@ public class ImageWriter {
                 .resolve(baseName + "_" + index + "." + extension).toFile();
 
         try {
-			outputFolder.mkdirs();
+            outputFolder.mkdirs();
             ImageIO.write(image, extension, file);
         } catch (Exception e) {
             logger.severe(() -> "Failed to write image to file: " + file.getAbsolutePath());
@@ -64,15 +69,15 @@ public class ImageWriter {
         }
     }
 
-	private BufferedImage createGraphics(Rectangle bounds, PixelMap pixels, PixelDrawer drawer) {
-		BufferedImage img = new BufferedImage(bounds.width, bounds.height, BufferedImage.TYPE_INT_ARGB);
-		Graphics2D graphics = img.createGraphics();
-		graphics.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_OFF);
-		for (Entry<Point, Color> entry : pixels.entrySet()) {
-			drawer.drawPixel(graphics, entry.getKey().x - bounds.x, entry.getKey().y - bounds.y, entry.getValue());
-		}
-		graphics.dispose();
-		img.flush();
-		return img;
-	}
+    private BufferedImage createGraphics(Rectangle bounds, PixelMap pixels, PixelDrawer drawer) {
+        BufferedImage img = new BufferedImage(bounds.width, bounds.height, BufferedImage.TYPE_INT_ARGB);
+        Graphics2D graphics = img.createGraphics();
+        graphics.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_OFF);
+        for (Entry<Point, Color> entry : pixels.entrySet()) {
+            drawer.drawPixel(graphics, entry.getKey().x - bounds.x, entry.getKey().y - bounds.y, entry.getValue());
+        }
+        graphics.dispose();
+        img.flush();
+        return img;
+    }
 }
