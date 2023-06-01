@@ -1,33 +1,34 @@
 package be.brambasiel.unpacker.gui;
 
+import be.brambasiel.unpacker.gui.streams.LogStream;
+
 import javax.swing.*;
 import java.awt.*;
 import java.io.File;
 import java.io.Serial;
 import java.util.HashSet;
 import java.util.Set;
-import java.util.logging.Logger;
 
 public class UnpackerJFrame extends JFrame {
 
     @Serial
     private static final long serialVersionUID = -4770437700973760346L;
-    private static final Logger logger = Logger.getLogger(UnpackerJFrame.class.getName());
-    private final TextArea console;
+
+    private final LogStream logger;
     private final UnpackerActions actions;
     private final Set<UpdateFunction> updators;
-
     private File inputFile;
     private File outputFolder;
 
-    public UnpackerJFrame(UnpackerActions actions) {
+    public UnpackerJFrame(UnpackerActions actions, LogStream logger) {
         super("Loose Sprite Unpacker");
+        this.logger = logger;
         this.updators = new HashSet<>();
         this.actions = actions;
         this.configure();
         this.initLabels();
         this.initButtons();
-        this.console = initConsole();
+        this.initConsole();
         this.setVisible(true);
         this.refresh();
     }
@@ -42,11 +43,11 @@ public class UnpackerJFrame extends JFrame {
         getContentPane().setLayout(null);
     }
 
-    private TextArea initConsole() {
-        TextArea consoleTextArea = new TextArea();
-        consoleTextArea.setBounds(10, 87, 339, 160);
-        getContentPane().add(consoleTextArea);
-        return consoleTextArea;
+    private void initConsole() {
+        UnpackerConsole console = new UnpackerConsole();
+        logger.addListener(console);
+        console.setBounds(10, 87, 339, 160);
+        getContentPane().add(console);
     }
 
     private void refresh() {
@@ -76,6 +77,9 @@ public class UnpackerJFrame extends JFrame {
         extractButton.setBounds(224, 260, 125, 37);
         getContentPane().add(extractButton);
         updators.add(() -> extractButton.setEnabled(inputFile != null && outputFolder != null));
+        extractButton.addActionListener(e -> {
+            actions.unpack(inputFile, outputFolder);
+        });
 
         JButton openButton = new JButton("Open output folder");
         openButton.setBounds(10, 260, 183, 37);

@@ -107,8 +107,13 @@ public class ImageUnpacker {
     }
 
     public static void runAsync(File imageFile, File outputFolder) {
+        runAsync(imageFile, outputFolder, () -> {});
+    }
+
+    public static void runAsync(File imageFile, File outputFolder, Runnable callback) {
         new Thread(() -> {
             run(imageFile, outputFolder);
+            callback.run();
         }).start();
     }
 

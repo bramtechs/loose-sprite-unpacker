@@ -3,7 +3,6 @@ package be.brambasiel.unpacker;
 import org.junit.jupiter.api.*;
 
 import java.io.File;
-import java.io.IOException;
 import java.net.URL;
 import java.nio.file.Path;
 import java.util.HashSet;
@@ -68,14 +67,14 @@ public class ImageUnpackerTest {
     }
 
     @Test
-    public void checkTestEnvironment(){
+    void checkTestEnvironment(){
         File tempFolder = createTestFolder("test");
         assertTrue(tempFolder.exists());
         assertTrue(tempFolder.isDirectory());
     }
 
     @Test
-    public void unpackShapeImage() {
+    void unpackShapeImage() {
         File imageFile = getTestFile("shapes.png");
         File tempFolder = createTestFolder("shapes_out");
 
