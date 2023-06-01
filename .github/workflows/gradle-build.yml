@@ -31,11 +31,7 @@ jobs:
       - name: Build with Gradle
         uses: gradle/gradle-build-action@67421db6bd0bf253fb4bd25b31ebb98943c375e1
         with:
-          arguments: jar
-      - name: Rename output jar
-        run: |
-          mv build/libs/java-loose-sprite-unpacker-gradle-1.0-SNAPSHOT.jar build/libs/sprite-unpacker.jar
-        shell: bash
+          arguments: shadowJar
       - name: Upload jar
         uses: marvinpinto/action-automatic-releases@latest
         with:
