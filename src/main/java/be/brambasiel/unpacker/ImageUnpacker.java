@@ -46,7 +46,7 @@ public class ImageUnpacker {
     }
 
     private boolean isOpaque(Color c) {
-        return c.getAlpha() > 0;
+        return c.getAlpha() > 25;
     }
 
     private void register(Point point, PixelMap map) {

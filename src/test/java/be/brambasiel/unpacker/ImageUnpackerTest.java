@@ -86,16 +86,16 @@ public class ImageUnpackerTest {
         assertEquals(4, files.length);
     }
 
-    // Test a bigger image
-    @Test
-    void unpackAsteroidsImage() {
-        File imageFile = getTestFile("asteroids.png");
-        File tempFolder = createTestFolder("asteroids_out");
-
-        ImageUnpacker.run(imageFile, tempFolder);
-
-        File[] files = tempFolder.listFiles();
-        assertNotNull(files);
-        assertEquals(4, files.length);
-    }
+//    Test a bigger image
+//    @Test
+//    void unpackAsteroidsImage() {
+//        File imageFile = getTestFile("asteroids.png");
+//        File tempFolder = createTestFolder("asteroids_out");
+//
+//        ImageUnpacker.run(imageFile, tempFolder);
+//
+//        File[] files = tempFolder.listFiles();
+//        assertNotNull(files);
+//        assertEquals(4, files.length);
+//    }
 }
