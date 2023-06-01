@@ -89,6 +89,7 @@ public class UnpackerJFrame extends JFrame {
                 actions.openExplorer(outputFolder);
             }
         });
+        updators.add(() -> openButton.setEnabled(outputFolder != null));
 
         Button inputSelectButton = new Button("Select");
         inputSelectButton.setBounds(264, 16, 70, 22);
