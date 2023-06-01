@@ -17,14 +17,23 @@ public class ImageWriter {
 
     private static final Logger logger = Logger.getLogger(ImageWriter.class.getName());
 
-    private final File imageFile;
+    private final String baseName;
+    private final String extension;
     private final File outputFolder;
     @Nullable
     private BufferedImage image;
 
-    public ImageWriter(File imageFile, File outputFolder) {
+    public ImageWriter(String baseName, String extension, File outputFolder) {
+        this.baseName = baseName;
+        if (!outputFolder.isDirectory()) {
+            throw new IllegalArgumentException("Output folder is not a directory");
+        }
         this.outputFolder = outputFolder;
-        this.imageFile = imageFile;
+        this.extension = extension;
+    }
+
+    public ImageWriter(File imageFile, File outputFolder){
+        this(FilenameUtils.getBaseName(imageFile.getName()), FilenameUtils.getExtension(imageFile.getName()), outputFolder);
     }
 
     public void setPixels(PixelMap pixels) {
@@ -41,12 +50,10 @@ public class ImageWriter {
             throw new NullPointerException("No pixels set in ImageWriter");
         }
 
-        String name = FilenameUtils.getBaseName(imageFile.getName());
-        String extension = FilenameUtils.getExtension(imageFile.getName());
-        FilenameUtils.concat(outputFolder.getAbsolutePath(), name + "_" + index + "." + extension);
+        FilenameUtils.concat(outputFolder.getAbsolutePath(), baseName + "_" + index + "." + extension);
 
         File file = Paths.get(outputFolder.getAbsolutePath())
-                .resolve(name + "_" + index + "." + extension).toFile();
+                .resolve(baseName + "_" + index + "." + extension).toFile();
 
         try {
 			outputFolder.mkdirs();
@@ -68,12 +75,4 @@ public class ImageWriter {
 		img.flush();
 		return img;
 	}
-
-    public File getImageFile() {
-        return imageFile;
-    }
-
-    public File getOutputFolder() {
-        return outputFolder;
-    }
 }

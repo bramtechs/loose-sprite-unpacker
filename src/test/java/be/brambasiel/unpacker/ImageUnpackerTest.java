@@ -16,9 +16,9 @@ public class ImageUnpackerTest {
     private static Logger logger;
     private static Set<File> tempFolders;
 
-    private File getTestFile(String fileName){
+    private File getTestFile(String fileName) {
         URL res = Thread.currentThread().getContextClassLoader().getResource(fileName);
-        if (res == null){
+        if (res == null) {
             throw new RuntimeException("Test file not found: " + fileName);
         }
         File file = new File(res.getFile());
@@ -26,13 +26,13 @@ public class ImageUnpackerTest {
         return file;
     }
 
-    private Path getTempPath(){
+    private Path getTempPath() {
         File tempFolder = new File(System.getProperty("java.io.tmpdir"));
         assertTrue(tempFolder.exists());
         return tempFolder.toPath();
     }
 
-    private File createTestFolder(String name){
+    private File createTestFolder(String name) {
         String fullName = name + "_" + System.currentTimeMillis();
         File tempFolder = getTempPath().resolve(fullName).toFile();
         assertTrue(tempFolder.mkdir());
@@ -42,17 +42,17 @@ public class ImageUnpackerTest {
     }
 
     @BeforeAll
-    public static void init(){
+    public static void init() {
         logger = Logger.getLogger(ImageUnpackerTest.class.getName());
         logger.setLevel(Level.ALL);
         tempFolders = new HashSet<>();
     }
 
-    private static void deleteFolder(File folder){
+    private static void deleteFolder(File folder) {
         // Delete all files in the folder
         File[] files = folder.listFiles();
         assertNotNull(files);
-        for (File file : files){
+        for (File file : files) {
             assertTrue(file.delete());
             logger.fine(() -> "Deleted temp file: " + file.getAbsolutePath());
         }
@@ -62,17 +62,18 @@ public class ImageUnpackerTest {
     }
 
     @AfterAll
-    public static void cleanup(){
+    public static void cleanup() {
         tempFolders.stream().filter(File::exists).forEach(ImageUnpackerTest::deleteFolder);
     }
 
     @Test
-    void checkTestEnvironment(){
+    void checkTestEnvironment() {
         File tempFolder = createTestFolder("test");
         assertTrue(tempFolder.exists());
         assertTrue(tempFolder.isDirectory());
     }
 
+    // Test a small image
     @Test
     void unpackShapeImage() {
         File imageFile = getTestFile("shapes.png");
@@ -82,6 +83,19 @@ public class ImageUnpackerTest {
 
         File[] files = tempFolder.listFiles();
         assertNotNull(files);
-        assertEquals(4,files.length);
+        assertEquals(4, files.length);
+    }
+
+    // Test a bigger image
+    @Test
+    void unpackAsteroidsImage() {
+        File imageFile = getTestFile("asteroids.png");
+        File tempFolder = createTestFolder("asteroids_out");
+
+        ImageUnpacker.run(imageFile, tempFolder);
+
+        File[] files = tempFolder.listFiles();
+        assertNotNull(files);
+        assertEquals(4, files.length);
     }
 }
