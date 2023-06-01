@@ -19,4 +19,4 @@ java -jar sprite-unpacker.jar ./spritesheet.png ./output # runs the program in C
 
 ## Installation
 
-Grab the release jar on the right of the screen or compile the program yourself with ```./gradlew jar```
+Grab the release jar on the right of the screen or compile the program yourself with ```./gradlew shadowJar```
